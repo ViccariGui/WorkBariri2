@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using WorkBariri.Models;
 
 namespace WorkBariri2.Models
 {
