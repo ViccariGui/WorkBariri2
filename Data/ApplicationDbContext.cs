@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using WorkBariri2.Data;
 using WorkBariri2.Models;
 
 namespace WorkBariri2.Data
@@ -16,6 +15,9 @@ namespace WorkBariri2.Data
         public DbSet<Usuarios> Usuario { get; set; }
         public DbSet<Vagas> Vaga { get; set; }
         public DbSet<InscricaoVagas> InscricaoVaga { get; set; }
+        public DbSet<Empresas> Empresas { get; set; }
+        public DbSet<AvaliacaoEmpresa> AvaliacaoEmpresas { get; set; }
+        public DbSet<AvaliacaoUsuarios> AvaliacaoUsuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -23,6 +25,8 @@ namespace WorkBariri2.Data
             builder.Entity<Usuarios>().ToTable("Usuarios");
             builder.Entity<Vagas>().ToTable("Vagas");
             builder.Entity<InscricaoVagas>().ToTable("InscricaoVagas");
+            builder.Entity<AvaliacaoUsuarios>().ToTable("AvaliacaoEmpresas");
+            builder.Entity<AvaliacaoEmpresa>().ToTable("AvaliacaoUsuarios");
         }
 
     }
