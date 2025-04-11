@@ -13,7 +13,7 @@ namespace WorkBariri2.Data
         {
         }
 
-        public DbSet<Usua0rios> Usuario { get; set; }
+        public DbSet<Usuarios> Usuario { get; set; }
         public DbSet<Vagas> Vaga { get; set; }
         public DbSet<InscricaoVagas> InscricaoVaga { get; set; }
 
