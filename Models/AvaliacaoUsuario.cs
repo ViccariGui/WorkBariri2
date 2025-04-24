@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using WorkBariri2.Models;
 
 namespace WorkBariri2.Models
 {
@@ -9,7 +10,7 @@ namespace WorkBariri2.Models
     {
         [Column("AvaliacaoId")]
         [Display(Name = "Código do usuário")]
-        public int AvaliacaoId { get; set; }
+        public int AvaliacaoUsuariosId { get; set; }
 
         [Column("Feedback")]
         [Display(Name = "Feedback do usuário")]
