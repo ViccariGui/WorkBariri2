@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace WorkBariri2.Migrations
 {
     /// <inheritdoc />
-    public partial class Tabelas : Migration
+    public partial class Completa : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,44 +50,6 @@ namespace WorkBariri2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Empresas",
-                columns: table => new
-                {
-                    EmpresasId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CNPJ = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Localizacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RamoEmpresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefone = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Empresas", x => x.EmpresasId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Usuarios",
-                columns: table => new
-                {
-                    UsuariosId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AreaEsp = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sexo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Senha = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CEP = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FotoPerfil = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TipoUsuario = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuarios", x => x.UsuariosId);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,26 +159,29 @@ namespace WorkBariri2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vagas",
+                name: "Usuarios",
                 columns: table => new
                 {
-                    VagasId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Especializacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Quantidade = table.Column<int>(type: "int", nullable: false),
-                    CargaHoraria = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Salario = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmpresasId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UsuariosId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AreaEsp = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sexo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CEP = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FotoPerfil = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TipoUsuario = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IdentityUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vagas", x => x.VagasId);
+                    table.PrimaryKey("PK_Usuarios", x => x.UsuariosId);
                     table.ForeignKey(
-                        name: "FK_Vagas_Empresas_EmpresasId",
-                        column: x => x.EmpresasId,
-                        principalTable: "Empresas",
-                        principalColumn: "EmpresasId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Usuarios_AspNetUsers_IdentityUserId",
+                        column: x => x.IdentityUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -225,24 +192,17 @@ namespace WorkBariri2.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Feedback = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EscalaEstrela = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UsuariosId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuariosId1 = table.Column<int>(type: "int", nullable: true),
-                    EmpresasId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UsuariosId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AvaliacaoEmpresas", x => x.AvaliacaoId);
                     table.ForeignKey(
-                        name: "FK_AvaliacaoEmpresas_Empresas_EmpresasId",
-                        column: x => x.EmpresasId,
-                        principalTable: "Empresas",
-                        principalColumn: "EmpresasId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AvaliacaoEmpresas_Usuarios_UsuariosId1",
-                        column: x => x.UsuariosId1,
+                        name: "FK_AvaliacaoEmpresas_Usuarios_UsuariosId",
+                        column: x => x.UsuariosId,
                         principalTable: "Usuarios",
-                        principalColumn: "UsuariosId");
+                        principalColumn: "UsuariosId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -253,24 +213,40 @@ namespace WorkBariri2.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Feedback = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EscalaEstrela = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UsuariosId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuariosId1 = table.Column<int>(type: "int", nullable: true),
-                    EmpresasId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UsuariosId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AvaliacaoUsuarios", x => x.AvaliacaoEmpresasId);
                     table.ForeignKey(
-                        name: "FK_AvaliacaoUsuarios_Empresas_EmpresasId",
-                        column: x => x.EmpresasId,
-                        principalTable: "Empresas",
-                        principalColumn: "EmpresasId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AvaliacaoUsuarios_Usuarios_UsuariosId1",
-                        column: x => x.UsuariosId1,
+                        name: "FK_AvaliacaoUsuarios_Usuarios_UsuariosId",
+                        column: x => x.UsuariosId,
                         principalTable: "Usuarios",
-                        principalColumn: "UsuariosId");
+                        principalColumn: "UsuariosId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vagas",
+                columns: table => new
+                {
+                    VagasId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Especializacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Quantidade = table.Column<int>(type: "int", nullable: false),
+                    CargaHoraria = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Salario = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UsuariosId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vagas", x => x.VagasId);
+                    table.ForeignKey(
+                        name: "FK_Vagas_Usuarios_UsuariosId",
+                        column: x => x.UsuariosId,
+                        principalTable: "Usuarios",
+                        principalColumn: "UsuariosId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -280,7 +256,6 @@ namespace WorkBariri2.Migrations
                     InscricaoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UsuariosId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuariosId1 = table.Column<int>(type: "int", nullable: true),
                     VagasId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     VagasId1 = table.Column<int>(type: "int", nullable: true),
                     ArquivoCurriculo = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -290,15 +265,25 @@ namespace WorkBariri2.Migrations
                 {
                     table.PrimaryKey("PK_InscricaoVagas", x => x.InscricaoId);
                     table.ForeignKey(
-                        name: "FK_InscricaoVagas_Usuarios_UsuariosId1",
-                        column: x => x.UsuariosId1,
+                        name: "FK_InscricaoVagas_Usuarios_UsuariosId",
+                        column: x => x.UsuariosId,
                         principalTable: "Usuarios",
-                        principalColumn: "UsuariosId");
+                        principalColumn: "UsuariosId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InscricaoVagas_Vagas_VagasId1",
                         column: x => x.VagasId1,
                         principalTable: "Vagas",
                         principalColumn: "VagasId");
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "362cac42-5f47-4b77-8064-f9cf9cd1ff08", null, "Freelancer", "FREELANCER" },
+                    { "f2b89b58-183a-45f4-b538-a4deb7ac9ee8", null, "Empresa", "EMPRESA" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -341,29 +326,19 @@ namespace WorkBariri2.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AvaliacaoEmpresas_EmpresasId",
+                name: "IX_AvaliacaoEmpresas_UsuariosId",
                 table: "AvaliacaoEmpresas",
-                column: "EmpresasId");
+                column: "UsuariosId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AvaliacaoEmpresas_UsuariosId1",
-                table: "AvaliacaoEmpresas",
-                column: "UsuariosId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AvaliacaoUsuarios_EmpresasId",
+                name: "IX_AvaliacaoUsuarios_UsuariosId",
                 table: "AvaliacaoUsuarios",
-                column: "EmpresasId");
+                column: "UsuariosId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AvaliacaoUsuarios_UsuariosId1",
-                table: "AvaliacaoUsuarios",
-                column: "UsuariosId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InscricaoVagas_UsuariosId1",
+                name: "IX_InscricaoVagas_UsuariosId",
                 table: "InscricaoVagas",
-                column: "UsuariosId1");
+                column: "UsuariosId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InscricaoVagas_VagasId1",
@@ -371,9 +346,14 @@ namespace WorkBariri2.Migrations
                 column: "VagasId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vagas_EmpresasId",
+                name: "IX_Usuarios_IdentityUserId",
+                table: "Usuarios",
+                column: "IdentityUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vagas_UsuariosId",
                 table: "Vagas",
-                column: "EmpresasId");
+                column: "UsuariosId");
         }
 
         /// <inheritdoc />
@@ -407,16 +387,13 @@ namespace WorkBariri2.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Vagas");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "Vagas");
-
-            migrationBuilder.DropTable(
-                name: "Empresas");
+                name: "AspNetUsers");
         }
     }
 }

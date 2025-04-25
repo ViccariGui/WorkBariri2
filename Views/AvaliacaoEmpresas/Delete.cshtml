@@ -11,26 +11,26 @@
     <h4>AvaliacaoEmpresa</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Feedback)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Feedback)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.EscalaEstrela)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.EscalaEstrela)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.UsuariosId)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsuariosId)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.Usuarios.Nome)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="AvaliacaoEmpresaId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
