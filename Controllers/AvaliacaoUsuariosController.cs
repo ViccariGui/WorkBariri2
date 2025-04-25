@@ -51,7 +51,10 @@ namespace WorkBariri2.Controllers
         // GET: AvaliacaoUsuarios/Create
         public IActionResult Create()
         {
+            var empresas = _context.Usuario.Where(u => u.TipoUsuario == "Freelancer").ToList();
+            ViewData["UsuarioId"] = new SelectList(empresas, "UsuariosId", "Nome");
             return View();
+
         }
 
         // POST: AvaliacaoUsuarios/Create

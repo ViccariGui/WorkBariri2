@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WorkBariri2.Data;
+using WorkBariri2.Migrations;
 using WorkBariri2.Models;
 
 namespace WorkBariri2.Controllers
@@ -52,6 +53,9 @@ namespace WorkBariri2.Controllers
         // GET: AvaliacaoEmpresas/Create
         public IActionResult Create()
         {
+            // Retornar a lista com os usuarios que tem o mesmo TipoUsuario do usuario autenticado
+            var empresas = _context.Usuario.Where(u => u.TipoUsuario == "Empresa").ToList();
+            ViewData["UsuarioId"] = new SelectList(empresas, "UsuariosId", "Nome");
             return View();
         }
 
