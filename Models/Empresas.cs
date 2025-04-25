@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace WorkBariri.Models
+namespace WorkBariri2.Models
 {
     public class Empresas
     {
         [Column("EmpresasId")]
         [Display(Name = "Código da Empresa")]
-        public int EmpresasId { get; set; }
+        public Guid EmpresasId { get; set; }
 
         [Column("Nome")]
         [Display(Name = "Nome")]

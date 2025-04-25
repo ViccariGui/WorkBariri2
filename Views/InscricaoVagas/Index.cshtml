@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WorkBariri2.Models.InscricaoVagas>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuariosId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VagasId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArquivoCurriculo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuariosId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VagasId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArquivoCurriculo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.InscricaoVagasId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.InscricaoVagasId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.InscricaoVagasId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -8,7 +8,7 @@ namespace WorkBariri2.Models
     {
         [Column("InscricaoId")]
         [Display(Name = "Código da Inscrição")]
-        public int InscricaoId { get; set; }
+        public int InscricaoVagasId { get; set; }
 
         [Column("UsuariosId")]
         [Display(Name = "Usuário")]
