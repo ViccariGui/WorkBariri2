@@ -13,7 +13,6 @@ using WorkBariri2.Models;
 namespace WorkBariri2.Controllers
 {
     [Authorize(Roles = "Empresa")]
-
     public class VagasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,8 +25,9 @@ namespace WorkBariri2.Controllers
         // GET: Vagas
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Vaga.Include(v => v.Empresas);
-            return View(await applicationDbContext.ToListAsync());
+            return _context.Vaga != null ?
+                        View(await _context.Vaga.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Vaga'  is null.");
         }
 
         // GET: Vagas/Details/5
@@ -39,7 +39,6 @@ namespace WorkBariri2.Controllers
             }
 
             var vagas = await _context.Vaga
-                .Include(v => v.Empresas)
                 .FirstOrDefaultAsync(m => m.VagasId == id);
             if (vagas == null)
             {
@@ -52,7 +51,6 @@ namespace WorkBariri2.Controllers
         // GET: Vagas/Create
         public IActionResult Create()
         {
-            ViewData["EmpresasId"] = new SelectList(_context.Empresas, "EmpresasId", "EmpresasId");
             return View();
         }
 
@@ -61,7 +59,7 @@ namespace WorkBariri2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VagasId,Especializacao,Quantidade,CargaHoraria,Salario,EmpresasId")] Vagas vagas)
+        public async Task<IActionResult> Create([Bind("VagasId,Especializacao,Quantidade,CargaHoraria,Salario,UsuariosId")] Vagas vagas)
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +67,6 @@ namespace WorkBariri2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmpresasId"] = new SelectList(_context.Empresas, "EmpresasId", "EmpresasId", vagas.EmpresasId);
             return View(vagas);
         }
 
@@ -86,7 +83,6 @@ namespace WorkBariri2.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmpresasId"] = new SelectList(_context.Empresas, "EmpresasId", "EmpresasId", vagas.EmpresasId);
             return View(vagas);
         }
 
@@ -95,7 +91,7 @@ namespace WorkBariri2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VagasId,Especializacao,Quantidade,CargaHoraria,Salario,EmpresasId")] Vagas vagas)
+        public async Task<IActionResult> Edit(int id, [Bind("VagasId,Especializacao,Quantidade,CargaHoraria,Salario,UsuariosId")] Vagas vagas)
         {
             if (id != vagas.VagasId)
             {
@@ -122,7 +118,6 @@ namespace WorkBariri2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmpresasId"] = new SelectList(_context.Empresas, "EmpresasId", "EmpresasId", vagas.EmpresasId);
             return View(vagas);
         }
 
@@ -135,7 +130,6 @@ namespace WorkBariri2.Controllers
             }
 
             var vagas = await _context.Vaga
-                .Include(v => v.Empresas)
                 .FirstOrDefaultAsync(m => m.VagasId == id);
             if (vagas == null)
             {

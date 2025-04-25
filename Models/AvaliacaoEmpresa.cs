@@ -25,11 +25,6 @@ namespace WorkBariri2.Models
         public Guid UsuariosId { get; set; }
         public Usuarios? Usuarios { get; set; }
 
-        [Column("EmpresasId")]
-        [Display(Name = "Empresa")]
-        public Guid EmpresasId { get; set; }
-        public Empresas? Empresas { get; set; }
-
     }
 }
 

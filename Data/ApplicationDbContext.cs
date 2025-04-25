@@ -18,7 +18,6 @@ namespace WorkBariri2.Data
         public DbSet<Usuarios> Usuario { get; set; }
         public DbSet<Vagas> Vaga { get; set; }
         public DbSet<InscricaoVagas> InscricaoVaga { get; set; }
-        public DbSet<Empresas> Empresas { get; set; }
         public DbSet<AvaliacaoEmpresa> AvaliacaoEmpresas { get; set; }
         public DbSet<AvaliacaoUsuarios> AvaliacaoUsuarios { get; set; }
 

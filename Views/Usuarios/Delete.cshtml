@@ -11,68 +11,55 @@
     <h4>Usuarios</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nome)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.AreaEsp)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.AreaEsp)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Sexo)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Sexo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
+        <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Telefone)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
+        <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Telefone)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Senha)
+        <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CPF)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Senha)
+        <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CPF)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Telefone)
+        <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CEP)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Telefone)
+        <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CEP)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CPF)
+        <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FotoPerfil)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CPF)
+        <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FotoPerfil)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CEP)
+        <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TipoUsuario)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CEP)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FotoPerfil)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FotoPerfil)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TipoUsuario)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TipoUsuario)
+        <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TipoUsuario)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="UsuariosId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

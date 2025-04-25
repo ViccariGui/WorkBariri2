@@ -17,27 +17,19 @@ namespace WorkBariri2.Models
         public string Nome { get; set; } = string.Empty;
 
         [Column("AreaEsp")]
-        [Display(Name = "Area de Especialização")]
+        [Display(Name = "Area de Especialização/Ramo de Trabalho")]
         public string AreaEsp { get; set; } = string.Empty;
 
         [Column("Sexo")]
         [Display(Name = "Sexo")]
         public string Sexo { get; set; } = string.Empty;
 
-        [Column("Email")]
-        [Display(Name = "Email")]
-        public string Email { get; set; } = string.Empty;
-
-        [Column("Senha")]
-        [Display(Name = "Senha")]
-        public string Senha { get; set; } = string.Empty;
-
         [Column("Telefone")]
         [Display(Name = "Telefone")]
         public string Telefone { get; set; } = string.Empty;
 
         [Column("CPF")]
-        [Display(Name = "CPF")]
+        [Display(Name = "CPF/CNPJ")]
         public string CPF { get; set; } = string.Empty;
 
         [Column("CEP")]

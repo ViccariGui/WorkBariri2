@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WorkBariri2.Data;
@@ -12,6 +11,7 @@ using WorkBariri2.Models;
 
 namespace WorkBariri2.Controllers
 {
+
     [Authorize(Roles = "Empresa")]
     public class AvaliacaoUsuariosController : Controller
     {
@@ -25,8 +25,9 @@ namespace WorkBariri2.Controllers
         // GET: AvaliacaoUsuarios
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.AvaliacaoUsuarios.Include(a => a.Empresas);
-            return View(await applicationDbContext.ToListAsync());
+            return _context.AvaliacaoUsuarios != null ?
+                        View(await _context.AvaliacaoUsuarios.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.AvaliacaoUsuarios'  is null.");
         }
 
         // GET: AvaliacaoUsuarios/Details/5
@@ -38,7 +39,6 @@ namespace WorkBariri2.Controllers
             }
 
             var avaliacaoUsuarios = await _context.AvaliacaoUsuarios
-                .Include(a => a.Empresas)
                 .FirstOrDefaultAsync(m => m.AvaliacaoUsuariosId == id);
             if (avaliacaoUsuarios == null)
             {
@@ -51,7 +51,6 @@ namespace WorkBariri2.Controllers
         // GET: AvaliacaoUsuarios/Create
         public IActionResult Create()
         {
-            ViewData["EmpresasId"] = new SelectList(_context.Empresas, "EmpresasId", "EmpresasId");
             return View();
         }
 
@@ -60,7 +59,7 @@ namespace WorkBariri2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AvaliacaoUsuariosId,Feedback,EscalaEstrela,UsuariosId,EmpresasId")] AvaliacaoUsuarios avaliacaoUsuarios)
+        public async Task<IActionResult> Create([Bind("AvaliacaoUsuariosId,Feedback,EscalaEstrela,UsuariosId")] AvaliacaoUsuarios avaliacaoUsuarios)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +67,6 @@ namespace WorkBariri2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmpresasId"] = new SelectList(_context.Empresas, "EmpresasId", "EmpresasId", avaliacaoUsuarios.EmpresasId);
             return View(avaliacaoUsuarios);
         }
 
@@ -85,7 +83,6 @@ namespace WorkBariri2.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmpresasId"] = new SelectList(_context.Empresas, "EmpresasId", "EmpresasId", avaliacaoUsuarios.EmpresasId);
             return View(avaliacaoUsuarios);
         }
 
@@ -94,7 +91,7 @@ namespace WorkBariri2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AvaliacaoUsuariosId,Feedback,EscalaEstrela,UsuariosId,EmpresasId")] AvaliacaoUsuarios avaliacaoUsuarios)
+        public async Task<IActionResult> Edit(int id, [Bind("AvaliacaoUsuariosId,Feedback,EscalaEstrela,UsuariosId")] AvaliacaoUsuarios avaliacaoUsuarios)
         {
             if (id != avaliacaoUsuarios.AvaliacaoUsuariosId)
             {
@@ -121,7 +118,6 @@ namespace WorkBariri2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmpresasId"] = new SelectList(_context.Empresas, "EmpresasId", "EmpresasId", avaliacaoUsuarios.EmpresasId);
             return View(avaliacaoUsuarios);
         }
 
@@ -134,7 +130,6 @@ namespace WorkBariri2.Controllers
             }
 
             var avaliacaoUsuarios = await _context.AvaliacaoUsuarios
-                .Include(a => a.Empresas)
                 .FirstOrDefaultAsync(m => m.AvaliacaoUsuariosId == id);
             if (avaliacaoUsuarios == null)
             {
