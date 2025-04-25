@@ -29,7 +29,7 @@ namespace WorkBariri2.Models
         [Display(Name = "Empresa")]
         public Guid EmpresasId { get; set; }
         public Empresas? Empresas { get; set; }
-
+       
     }
 }
 
