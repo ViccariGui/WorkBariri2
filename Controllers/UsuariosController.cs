@@ -51,9 +51,9 @@ namespace WorkBariri2.Controllers
             return View(usuarios);
         }
 
-        [Authorize(Roles = "Freelancer")]
+        [Authorize(Roles = "Freelancer,Empresa")]
         // GET: Usuarios/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Usuario == null)
             {
@@ -73,6 +73,7 @@ namespace WorkBariri2.Controllers
         // GET: Usuarios/Create
         public IActionResult Create()
         {
+
             return View();
         }
 
@@ -132,7 +133,7 @@ namespace WorkBariri2.Controllers
         }
         [Authorize(Roles = "Freelancer")]
         // GET: Usuarios/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Usuario == null)
             {
@@ -152,7 +153,7 @@ namespace WorkBariri2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UsuariosId,Nome,AreaEsp,Sexo,Email,Senha,Telefone,CPF,CEP,FotoPerfil,TipoUsuario")] Usuarios usuarios)
+        public async Task<IActionResult> Edit(Guid id, [Bind("UsuariosId,Nome,AreaEsp,Sexo,Email,Senha,Telefone,CPF,CEP,FotoPerfil,TipoUsuario")] Usuarios usuarios)
         {
             if (id != usuarios.UsuariosId)
             {
@@ -183,7 +184,7 @@ namespace WorkBariri2.Controllers
         }
         [Authorize(Roles = "Freelancer")]
         // GET: Usuarios/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Usuario == null)
             {
@@ -203,7 +204,7 @@ namespace WorkBariri2.Controllers
         // POST: Usuarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             if (_context.Usuario == null)
             {
@@ -219,7 +220,7 @@ namespace WorkBariri2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UsuariosExists(int id)
+        private bool UsuariosExists(Guid id)
         {
             return (_context.Usuario?.Any(e => e.UsuariosId == id)).GetValueOrDefault();
         }
