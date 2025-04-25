@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +12,7 @@ using WorkBariri2.Models;
 
 namespace WorkBariri2.Controllers
 {
+    [Authorize(Roles = "Freelancer")]
     public class InscricaoVagasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,9 +25,9 @@ namespace WorkBariri2.Controllers
         // GET: InscricaoVagas
         public async Task<IActionResult> Index()
         {
-              return _context.InscricaoVaga != null ? 
-                          View(await _context.InscricaoVaga.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.InscricaoVaga'  is null.");
+            return _context.InscricaoVaga != null ?
+                        View(await _context.InscricaoVaga.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.InscricaoVaga'  is null.");
         }
 
         // GET: InscricaoVagas/Details/5
@@ -150,14 +153,14 @@ namespace WorkBariri2.Controllers
             {
                 _context.InscricaoVaga.Remove(inscricaoVagas);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool InscricaoVagasExists(int id)
         {
-          return (_context.InscricaoVaga?.Any(e => e.InscricaoVagasId == id)).GetValueOrDefault();
+            return (_context.InscricaoVaga?.Any(e => e.InscricaoVagasId == id)).GetValueOrDefault();
         }
     }
 }
