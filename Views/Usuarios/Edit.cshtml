@@ -58,11 +58,18 @@
                 <input asp-for="FotoPerfil" class="form-control" />
                 <span asp-validation-for="FotoPerfil" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="TipoUsuario" class="control-label"></label>
-                <input asp-for="TipoUsuario" class="form-control" />
-                <span asp-validation-for="TipoUsuario" class="text-danger"></span>
-            </div>
+           <div class="form-check">
+  <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
+  <label class="form-check-label" for="radioDefault1">
+   Empresa
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+  <label class="form-check-label" for="radioDefault2">
+    FreeLancer
+  </label>
+</div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -75,5 +82,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

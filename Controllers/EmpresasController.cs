@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using WorkBariri2.Models;
 
 namespace WorkBariri2.Controllers
 {
+    [Authorize(Roles = "Empresa")]
     public class EmpresasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,9 +24,9 @@ namespace WorkBariri2.Controllers
         // GET: Empresas
         public async Task<IActionResult> Index()
         {
-              return _context.Empresas != null ? 
-                          View(await _context.Empresas.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Empresas'  is null.");
+            return _context.Empresas != null ?
+                        View(await _context.Empresas.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Empresas'  is null.");
         }
 
         // GET: Empresas/Details/5
@@ -151,14 +153,14 @@ namespace WorkBariri2.Controllers
             {
                 _context.Empresas.Remove(empresas);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool EmpresasExists(Guid id)
         {
-          return (_context.Empresas?.Any(e => e.EmpresasId == id)).GetValueOrDefault();
+            return (_context.Empresas?.Any(e => e.EmpresasId == id)).GetValueOrDefault();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Identity;
 
 namespace WorkBariri2.Models
 {
@@ -50,5 +51,9 @@ namespace WorkBariri2.Models
         [Column("TipoUsuario")]
         [Display(Name = "Tipo de Usuário")]
         public string TipoUsuario { get; set; } = string.Empty;
+
+
+        public Guid? AppUserId { get; set; }
+        public IdentityUser? IdentityUser { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace WorkBariri2.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("ProductVersion", "7.0.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -47,6 +47,20 @@ namespace WorkBariri2.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "7efc7065-12f4-4cb2-a678-65b1740e2eda",
+                            Name = "Empresa",
+                            NormalizedName = "EMPRESA"
+                        },
+                        new
+                        {
+                            Id = "787882fb-fff3-4b47-9441-b0244fa8704a",
+                            Name = "Freelancer",
+                            NormalizedName = "FREELANCER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -390,6 +404,9 @@ namespace WorkBariri2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsuariosId"));
 
+                    b.Property<Guid?>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("AreaEsp")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -414,6 +431,9 @@ namespace WorkBariri2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("FotoPerfil");
+
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -441,6 +461,8 @@ namespace WorkBariri2.Migrations
                         .HasColumnName("TipoUsuario");
 
                     b.HasKey("UsuariosId");
+
+                    b.HasIndex("IdentityUserId");
 
                     b.ToTable("Usuarios", (string)null);
                 });
@@ -582,6 +604,15 @@ namespace WorkBariri2.Migrations
                     b.Navigation("Usuarios");
 
                     b.Navigation("Vagas");
+                });
+
+            modelBuilder.Entity("WorkBariri2.Models.Usuarios", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
+
+                    b.Navigation("IdentityUser");
                 });
 
             modelBuilder.Entity("WorkBariri2.Models.Vagas", b =>

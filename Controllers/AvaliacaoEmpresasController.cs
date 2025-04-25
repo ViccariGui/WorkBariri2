@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +12,7 @@ using WorkBariri2.Models;
 
 namespace WorkBariri2.Controllers
 {
+    [Authorize(Roles = "Freelancer")]
     public class AvaliacaoEmpresasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -155,14 +158,14 @@ namespace WorkBariri2.Controllers
             {
                 _context.AvaliacaoEmpresas.Remove(avaliacaoEmpresa);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AvaliacaoEmpresaExists(int id)
         {
-          return (_context.AvaliacaoEmpresas?.Any(e => e.AvaliacaoEmpresaId == id)).GetValueOrDefault();
+            return (_context.AvaliacaoEmpresas?.Any(e => e.AvaliacaoEmpresaId == id)).GetValueOrDefault();
         }
     }
 }
