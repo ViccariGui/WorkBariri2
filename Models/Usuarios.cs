@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Identity;
 
 namespace WorkBariri2.Models
 {
@@ -16,27 +17,19 @@ namespace WorkBariri2.Models
         public string Nome { get; set; } = string.Empty;
 
         [Column("AreaEsp")]
-        [Display(Name = "Area de Especialização")]
+        [Display(Name = "Area de Especialização/Ramo de Trabalho")]
         public string AreaEsp { get; set; } = string.Empty;
 
         [Column("Sexo")]
         [Display(Name = "Sexo")]
         public string Sexo { get; set; } = string.Empty;
 
-        [Column("Email")]
-        [Display(Name = "Email")]
-        public string Email { get; set; } = string.Empty;
-
-        [Column("Senha")]
-        [Display(Name = "Senha")]
-        public string Senha { get; set; } = string.Empty;
-
         [Column("Telefone")]
         [Display(Name = "Telefone")]
         public string Telefone { get; set; } = string.Empty;
 
         [Column("CPF")]
-        [Display(Name = "CPF")]
+        [Display(Name = "CPF/CNPJ")]
         public string CPF { get; set; } = string.Empty;
 
         [Column("CEP")]
@@ -50,5 +43,9 @@ namespace WorkBariri2.Models
         [Column("TipoUsuario")]
         [Display(Name = "Tipo de Usuário")]
         public string TipoUsuario { get; set; } = string.Empty;
+
+
+        public Guid? AppUserId { get; set; }
+        public IdentityUser? IdentityUser { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,8 +12,10 @@ using WorkBariri2.Models;
 
 namespace WorkBariri2.Controllers
 {
+    [Authorize(Roles = "Freelancer")]
     public class AvaliacaoEmpresasController : Controller
     {
+
         private readonly ApplicationDbContext _context;
 
         public AvaliacaoEmpresasController(ApplicationDbContext context)
@@ -22,8 +26,9 @@ namespace WorkBariri2.Controllers
         // GET: AvaliacaoEmpresas
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.AvaliacaoEmpresas.Include(a => a.Empresas);
-            return View(await applicationDbContext.ToListAsync());
+            return _context.AvaliacaoEmpresas != null ?
+                        View(await _context.AvaliacaoEmpresas.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.AvaliacaoEmpresas'  is null.");
         }
 
         // GET: AvaliacaoEmpresas/Details/5
@@ -35,7 +40,6 @@ namespace WorkBariri2.Controllers
             }
 
             var avaliacaoEmpresa = await _context.AvaliacaoEmpresas
-                .Include(a => a.Empresas)
                 .FirstOrDefaultAsync(m => m.AvaliacaoEmpresaId == id);
             if (avaliacaoEmpresa == null)
             {
@@ -48,7 +52,6 @@ namespace WorkBariri2.Controllers
         // GET: AvaliacaoEmpresas/Create
         public IActionResult Create()
         {
-            ViewData["EmpresasId"] = new SelectList(_context.Empresas, "EmpresasId", "EmpresasId");
             return View();
         }
 
@@ -57,7 +60,7 @@ namespace WorkBariri2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AvaliacaoEmpresaId,Feedback,EscalaEstrela,UsuariosId,EmpresasId")] AvaliacaoEmpresa avaliacaoEmpresa)
+        public async Task<IActionResult> Create([Bind("AvaliacaoEmpresaId,Feedback,EscalaEstrela,UsuariosId")] AvaliacaoEmpresa avaliacaoEmpresa)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +68,6 @@ namespace WorkBariri2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmpresasId"] = new SelectList(_context.Empresas, "EmpresasId", "EmpresasId", avaliacaoEmpresa.EmpresasId);
             return View(avaliacaoEmpresa);
         }
 
@@ -82,7 +84,6 @@ namespace WorkBariri2.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmpresasId"] = new SelectList(_context.Empresas, "EmpresasId", "EmpresasId", avaliacaoEmpresa.EmpresasId);
             return View(avaliacaoEmpresa);
         }
 
@@ -91,7 +92,7 @@ namespace WorkBariri2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AvaliacaoEmpresaId,Feedback,EscalaEstrela,UsuariosId,EmpresasId")] AvaliacaoEmpresa avaliacaoEmpresa)
+        public async Task<IActionResult> Edit(int id, [Bind("AvaliacaoEmpresaId,Feedback,EscalaEstrela,UsuariosId")] AvaliacaoEmpresa avaliacaoEmpresa)
         {
             if (id != avaliacaoEmpresa.AvaliacaoEmpresaId)
             {
@@ -118,7 +119,6 @@ namespace WorkBariri2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmpresasId"] = new SelectList(_context.Empresas, "EmpresasId", "EmpresasId", avaliacaoEmpresa.EmpresasId);
             return View(avaliacaoEmpresa);
         }
 
@@ -131,7 +131,6 @@ namespace WorkBariri2.Controllers
             }
 
             var avaliacaoEmpresa = await _context.AvaliacaoEmpresas
-                .Include(a => a.Empresas)
                 .FirstOrDefaultAsync(m => m.AvaliacaoEmpresaId == id);
             if (avaliacaoEmpresa == null)
             {
@@ -155,14 +154,14 @@ namespace WorkBariri2.Controllers
             {
                 _context.AvaliacaoEmpresas.Remove(avaliacaoEmpresa);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AvaliacaoEmpresaExists(int id)
         {
-          return (_context.AvaliacaoEmpresas?.Any(e => e.AvaliacaoEmpresaId == id)).GetValueOrDefault();
+            return (_context.AvaliacaoEmpresas?.Any(e => e.AvaliacaoEmpresaId == id)).GetValueOrDefault();
         }
     }
 }

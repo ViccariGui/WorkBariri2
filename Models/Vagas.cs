@@ -27,9 +27,10 @@ namespace WorkBariri2.Models
         [Display(Name = "Salário")]
         public string Salario { get; set; } = string.Empty;
 
-        [Column("EmpresasId")]
-        [Display(Name = "Empresa")]
-        public Guid EmpresasId { get; set; }
-        public Empresas? Empresas { get; set; }
+        [Column("UsuariosId")]
+        [Display(Name = "Usuário")]
+        public Guid UsuariosId { get; set; }
+        public Usuarios? Usuarios { get; set; }
+
     }
 }
