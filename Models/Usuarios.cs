@@ -10,7 +10,7 @@ namespace WorkBariri2.Models
     {
         [Column("UsuariosId")]
         [Display(Name = "Id do Usuário")]
-        public int UsuariosId { get; set; }
+        public Guid UsuariosId { get; set; }
 
         [Column("Nome")]
         [Display(Name = "Nome")]

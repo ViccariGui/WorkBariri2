@@ -25,9 +25,8 @@ namespace WorkBariri2.Controllers
         // GET: AvaliacaoUsuarios
         public async Task<IActionResult> Index()
         {
-            return _context.AvaliacaoUsuarios != null ?
-                        View(await _context.AvaliacaoUsuarios.ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.AvaliacaoUsuarios'  is null.");
+            var avalicacoes = await _context.AvaliacaoUsuarios.Include(u => u.Usuarios).ToListAsync();
+            return View(avalicacoes);
         }
 
         // GET: AvaliacaoUsuarios/Details/5

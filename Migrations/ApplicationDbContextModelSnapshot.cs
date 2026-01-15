@@ -51,13 +51,13 @@ namespace WorkBariri2.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7e36c8d6-3de6-415d-b2f8-1a49643fb36d",
+                            Id = "f2b89b58-183a-45f4-b538-a4deb7ac9ee8",
                             Name = "Empresa",
                             NormalizedName = "EMPRESA"
                         },
                         new
                         {
-                            Id = "0ae4e09f-1f5a-4f91-8f1a-91faafb55a39",
+                            Id = "362cac42-5f47-4b77-8064-f9cf9cd1ff08",
                             Name = "Freelancer",
                             NormalizedName = "FREELANCER"
                         });
@@ -261,12 +261,9 @@ namespace WorkBariri2.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UsuariosId");
 
-                    b.Property<int?>("UsuariosId1")
-                        .HasColumnType("int");
-
                     b.HasKey("AvaliacaoEmpresaId");
 
-                    b.HasIndex("UsuariosId1");
+                    b.HasIndex("UsuariosId");
 
                     b.ToTable("AvaliacaoUsuarios", (string)null);
                 });
@@ -294,12 +291,9 @@ namespace WorkBariri2.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UsuariosId");
 
-                    b.Property<int?>("UsuariosId1")
-                        .HasColumnType("int");
-
                     b.HasKey("AvaliacaoUsuariosId");
 
-                    b.HasIndex("UsuariosId1");
+                    b.HasIndex("UsuariosId");
 
                     b.ToTable("AvaliacaoEmpresas", (string)null);
                 });
@@ -327,9 +321,6 @@ namespace WorkBariri2.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UsuariosId");
 
-                    b.Property<int?>("UsuariosId1")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("VagasId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("VagasId");
@@ -339,7 +330,7 @@ namespace WorkBariri2.Migrations
 
                     b.HasKey("InscricaoVagasId");
 
-                    b.HasIndex("UsuariosId1");
+                    b.HasIndex("UsuariosId");
 
                     b.HasIndex("VagasId1");
 
@@ -348,12 +339,10 @@ namespace WorkBariri2.Migrations
 
             modelBuilder.Entity("WorkBariri2.Models.Usuarios", b =>
                 {
-                    b.Property<int>("UsuariosId")
+                    b.Property<Guid>("UsuariosId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("UsuariosId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsuariosId"));
 
                     b.Property<Guid?>("AppUserId")
                         .HasColumnType("uniqueidentifier");
@@ -440,12 +429,9 @@ namespace WorkBariri2.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UsuariosId");
 
-                    b.Property<int?>("UsuariosId1")
-                        .HasColumnType("int");
-
                     b.HasKey("VagasId");
 
-                    b.HasIndex("UsuariosId1");
+                    b.HasIndex("UsuariosId");
 
                     b.ToTable("Vagas", (string)null);
                 });
@@ -505,7 +491,9 @@ namespace WorkBariri2.Migrations
                 {
                     b.HasOne("WorkBariri2.Models.Usuarios", "Usuarios")
                         .WithMany()
-                        .HasForeignKey("UsuariosId1");
+                        .HasForeignKey("UsuariosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuarios");
                 });
@@ -514,7 +502,9 @@ namespace WorkBariri2.Migrations
                 {
                     b.HasOne("WorkBariri2.Models.Usuarios", "Usuarios")
                         .WithMany()
-                        .HasForeignKey("UsuariosId1");
+                        .HasForeignKey("UsuariosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuarios");
                 });
@@ -523,7 +513,9 @@ namespace WorkBariri2.Migrations
                 {
                     b.HasOne("WorkBariri2.Models.Usuarios", "Usuarios")
                         .WithMany()
-                        .HasForeignKey("UsuariosId1");
+                        .HasForeignKey("UsuariosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WorkBariri2.Models.Vagas", "Vagas")
                         .WithMany()
@@ -547,7 +539,9 @@ namespace WorkBariri2.Migrations
                 {
                     b.HasOne("WorkBariri2.Models.Usuarios", "Usuarios")
                         .WithMany()
-                        .HasForeignKey("UsuariosId1");
+                        .HasForeignKey("UsuariosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuarios");
                 });
